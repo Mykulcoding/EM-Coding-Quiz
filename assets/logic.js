@@ -36,21 +36,21 @@ function startQuiz() {
 }
 
 function displayQuestion(index) {
-  if (index < questions.length) {
-    const currentQuestion = questions[index];
-    questionTitle.textContent = currentQuestion.question;
-    choicesContainer.innerHTML = '';
-
-    currentQuestion.choices.forEach(choice => {
-      const choiceButton = document.createElement('button');
-      choiceButton.textContent = choice;
-      choiceButton.addEventListener('click', () => handleAnswerClick(choice, currentQuestion.answer));
-      choicesContainer.appendChild(choiceButton);
-    });
-  } else {
-    endQuiz();
+    if (index < questions.length) {
+      const currentQuestion = questions[index];
+      questionTitle.textContent = currentQuestion.question;
+      choicesContainer.innerHTML = '';
+  
+      currentQuestion.choices.forEach(choice => {
+        const choiceButton = document.createElement('button');
+        choiceButton.textContent = choice;
+        choiceButton.addEventListener('click', () => handleAnswerClick(choice, currentQuestion.answer));
+        choicesContainer.appendChild(choiceButton);
+      });
+    } else {
+      endQuiz(); // Move the endQuiz() call outside the else block to end the quiz only after the last question
+    }
   }
-}
 
 function handleAnswerClick(selectedChoice, correctAnswer) {
   if (selectedChoice === correctAnswer) {
