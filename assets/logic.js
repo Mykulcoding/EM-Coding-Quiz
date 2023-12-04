@@ -50,3 +50,79 @@
 // Function to handle highscore clearing
   // Clear highscores from local storage
   // Update highscores display
+
+  //CODE
+
+  import questions from './questions.js';
+
+  const startButton = document.getElementById('start');
+  const questionTitle = document.getElementById('question-title');
+  const choicesContainer = document.getElementById('choices');
+  const timerDisplay = document.getElementById('time');
+  const endScreen = document.getElementById('end-screen');
+  const initialsInput = document.getElementById('initials');
+  const submitButton = document.getElementById('submit');
+  const highscoresList = document.getElementById('highscores');
+  
+  let currentQuestionIndex = 0;
+  let timer;
+  let score = 0;
+  let timeLeft = 60; // Initial time in seconds
+  
+  function hideElement(element) {
+    element.classList.add('hide');
+  }
+  
+  function showElement(element) {
+    element.classList.remove('hide');
+  }
+  
+  function startQuiz() {
+    hideElement(startButton);
+    showElement(choicesContainer);
+    startTimer();
+    displayQuestion(currentQuestionIndex);
+  }
+  
+  function displayQuestion(index) {
+    const currentQuestion = questions[index];
+    questionTitle.textContent = currentQuestion.question;
+    choicesContainer.innerHTML = '';
+  
+    currentQuestion.choices.forEach(choice => {
+      const choiceButton = document.createElement('button');
+      choiceButton.textContent = choice;
+      choiceButton.addEventListener('click', () => handleAnswerClick(choice, currentQuestion.answer));
+      choicesContainer.appendChild(choiceButton);
+    });
+  }
+  
+  function handleAnswerClick(selectedChoice, correctAnswer) {
+    // Handle answer click logic
+  }
+  
+  function endQuiz() {
+    clearInterval(timer);
+    timerDisplay.textContent = timeLeft;
+    hideElement(choicesContainer);
+    showElement(endScreen);
+    document.getElementById('final-score').textContent = score;
+  }
+  
+  function startTimer() {
+    timer = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        endQuiz();
+      }
+    }, 1000);
+  }
+  
+  function saveHighscores() {
+    // Handle saving highscores
+  }
+  
+  startButton.addEventListener('click', startQuiz);
+  submitButton.addEventListener('click', saveHighscores);
+  
