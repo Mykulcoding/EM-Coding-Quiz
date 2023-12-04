@@ -85,7 +85,7 @@
   }
   
   function displayQuestion(index) {
-    const currentQuestion = questions[index];
+    const currentQuestion = window.questions[index]; // Access questions from the window object
     questionTitle.textContent = currentQuestion.question;
     choicesContainer.innerHTML = '';
   
