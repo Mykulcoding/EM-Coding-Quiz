@@ -29,13 +29,15 @@ function showElement(element) {
 }
 
 function startQuiz() {
-  hideElement(startButton);
-  showElement(choicesContainer);
-  startTimer();
-  displayQuestion(currentQuestionIndex);
-}
-
-function displayQuestion(index) {
+    console.log('Starting quiz...');
+    hideElement(startButton);
+    showElement(choicesContainer);
+    startTimer();
+    displayQuestion(currentQuestionIndex);
+  }
+  
+  function displayQuestion(index) {
+    console.log('Displaying question...');
     if (index < questions.length) {
       const currentQuestion = questions[index];
       questionTitle.textContent = currentQuestion.question;
@@ -48,45 +50,40 @@ function displayQuestion(index) {
         choicesContainer.appendChild(choiceButton);
       });
     } else {
-      endQuiz(); // Move the endQuiz() call outside the else block to end the quiz only after the last question
-    }
-  }
-
-function handleAnswerClick(selectedChoice, correctAnswer) {
-  if (selectedChoice === correctAnswer) {
-    score++; // Increment score for correct answer
-  } else {
-    timeLeft -= 10; // Deduct 10 seconds for incorrect answer
-    if (timeLeft < 0) {
-      timeLeft = 0; // Ensure time doesn't go below 0
-    }
-  }
-  currentQuestionIndex++;
-  displayQuestion(currentQuestionIndex);
-}
-
-function endQuiz() {
-  clearInterval(timer);
-  timerDisplay.textContent = timeLeft;
-  hideElement(choicesContainer);
-  showElement(endScreen);
-  document.getElementById('final-score').textContent = score;
-}
-
-function startTimer() {
-  timer = setInterval(() => {
-    timeLeft--;
-    timerDisplay.textContent = timeLeft;
-    if (timeLeft <= 0) {
+      console.log('End of questions. Ending quiz...');
       endQuiz();
     }
-  }, 1000);
-}
-
-function saveHighscores() {
-  // Handle saving highscores
-}
-
-startButton.addEventListener('click', startQuiz);
-submitButton.addEventListener('click', saveHighscores);
-
+  }
+  
+  function handleAnswerClick(selectedChoice, correctAnswer) {
+    console.log('Handling answer click...');
+    // Existing logic...
+  }
+  
+  function endQuiz() {
+    console.log('Ending quiz...');
+    clearInterval(timer);
+    timerDisplay.textContent = timeLeft;
+    hideElement(choicesContainer);
+    showElement(endScreen);
+    document.getElementById('final-score').textContent = score;
+  }
+  
+  function startTimer() {
+    console.log('Starting timer...');
+    timer = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        console.log('Time is up! Ending quiz...');
+        endQuiz();
+      }
+    }, 1000);
+  }
+  
+  function saveHighscores() {
+    // Handle saving highscores
+  }
+  
+  startButton.addEventListener('click', startQuiz);
+  submitButton.addEventListener('click', saveHighscores);
