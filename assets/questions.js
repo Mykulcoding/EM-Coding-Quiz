@@ -52,4 +52,4 @@ const questions = [
 
 ];
 
-window.questions = questions;
+export { questions };

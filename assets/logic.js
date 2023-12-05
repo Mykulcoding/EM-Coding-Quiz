@@ -1,8 +1,11 @@
+// Importing questions from 'questions.js'
+import { questions } from './questions.js';
+
 document.addEventListener('DOMContentLoaded', function() {
     const startButton = document.getElementById('start');
     startButton.addEventListener('click', startQuiz);
 
-    // other initialization or setup code can be added here, if needed
+    // Other initialization or setup code here, if needed
 });
 
 
@@ -22,7 +25,7 @@ let score = 0;
 let timeLeft = 60; // Initial time in seconds
 
 function startQuiz() {
-    console.log('Start button clicked - startQuiz function triggered'); // Add this line
+    console.log('Start button clicked - startQuiz function triggered'); 
     hideElement(startButton);
     showElement(choicesContainer);
     startTimer();
