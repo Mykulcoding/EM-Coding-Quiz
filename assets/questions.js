@@ -1,4 +1,4 @@
-window.questions = window.questions || [
+const questions = [
     {
         question: "What is JavaScript?",
         choices: ["A programming language", "A markup language", "A style sheet language"],

@@ -1,3 +1,12 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const startButton = document.getElementById('start');
+    startButton.addEventListener('click', startQuiz);
+
+    // other initialization or setup code can be added here, if needed
+});
+
+
+
 const startButton = document.getElementById('start');
 const questionTitle = document.getElementById('question-title');
 const choicesContainer = document.getElementById('choices');
@@ -7,83 +16,82 @@ const initialsInput = document.getElementById('initials');
 const submitButton = document.getElementById('submit');
 const highscoresList = document.getElementById('highscores');
 
-// Access questions from window
-const questions = window.questions || [];
-
-if (!window.questions) {
-  // If questions are not defined in the window, assign an empty array
-  window.questions = questions;
-}
-
 let currentQuestionIndex = 0;
 let timer;
 let score = 0;
 let timeLeft = 60; // Initial time in seconds
 
-function hideElement(element) {
-  element.classList.add('hide');
-}
-
-function showElement(element) {
-  element.classList.remove('hide');
-}
-
 function startQuiz() {
-    console.log('Starting quiz...');
+    console.log('Start button clicked - startQuiz function triggered'); // Add this line
     hideElement(startButton);
     showElement(choicesContainer);
     startTimer();
     displayQuestion(currentQuestionIndex);
-  }
-  
-  function displayQuestion(index) {
-    console.log('Displaying question...');
-    if (index < questions.length) {
-      const currentQuestion = questions[index];
-      questionTitle.textContent = currentQuestion.question;
-      choicesContainer.innerHTML = '';
-  
-      currentQuestion.choices.forEach(choice => {
+    console.log('Quiz started');
+}
+function displayQuestion(index) {
+    const currentQuestion = questions[index];
+    questionTitle.textContent = currentQuestion.question;
+    choicesContainer.innerHTML = '';
+    currentQuestion.choices.forEach(choice => {
         const choiceButton = document.createElement('button');
         choiceButton.textContent = choice;
         choiceButton.addEventListener('click', () => handleAnswerClick(choice, currentQuestion.answer));
         choicesContainer.appendChild(choiceButton);
-      });
+    });
+    console.log(`Question ${index + 1} displayed`);
+}
+function handleAnswerClick(selectedChoice, correctAnswer) {
+    if (selectedChoice === correctAnswer) {
+        score += 10;
     } else {
-      console.log('End of questions. Ending quiz...');
-      endQuiz();
+        timeLeft -= 10;
+        if (timeLeft < 0) {
+            timeLeft = 0;
+        }
     }
-  }
-  
-  function handleAnswerClick(selectedChoice, correctAnswer) {
-    console.log('Handling answer click...');
-    // Existing logic...
-  }
-  
-  function endQuiz() {
-    console.log('Ending quiz...');
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        displayQuestion(currentQuestionIndex);
+    } else {
+        endQuiz();
+    }
+    console.log(`Selected choice: ${selectedChoice}, Correct answer: ${correctAnswer}`);
+}
+function endQuiz() {
     clearInterval(timer);
     timerDisplay.textContent = timeLeft;
     hideElement(choicesContainer);
     showElement(endScreen);
     document.getElementById('final-score').textContent = score;
-  }
-  
-  function startTimer() {
-    console.log('Starting timer...');
+    console.log('Quiz ended');
+}
+function startTimer() {
     timer = setInterval(() => {
-      timeLeft--;
-      timerDisplay.textContent = timeLeft;
-      if (timeLeft <= 0) {
-        console.log('Time is up! Ending quiz...');
-        endQuiz();
-      }
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            endQuiz();
+        }
     }, 1000);
-  }
-  
-  function saveHighscores() {
-    // Handle saving highscores
-  }
-  
-  startButton.addEventListener('click', startQuiz);
-  submitButton.addEventListener('click', saveHighscores);
+    console.log('Timer started');
+}
+
+function saveHighscores() {
+    const initials = initialsInput.value.trim();
+    if (initials !== '') {
+        const highscores = JSON.parse(localStorage.getItem('highscores')) || [];
+        highscores.push({ initials, score });
+        localStorage.setItem('highscores', JSON.stringify(highscores));
+        window.location.href = 'highscores.html';
+    }
+}
+submitButton.addEventListener('click', saveHighscores);
+
+function hideElement(element) {
+    element.style.display = 'none';
+}
+
+function showElement(element) {
+    element.style.display = 'block';
+}
