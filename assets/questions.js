@@ -21,7 +21,7 @@ const questions = [
     },
     {
         question: "What does CSS stand for?",
-        choices: ["Cascading Style Sheets", "Cascading Style Sheets", "A style sheet language"],
+        choices: ["Code Style Standards", "Cascading Style Sheets", "A style sheet language"],
         answer: "Cascading Style Sheets"
     },
     {
@@ -52,4 +52,3 @@ const questions = [
 
 ];
 
-export { questions };

@@ -1,5 +1,4 @@
 // Importing questions from 'questions.js'
-import { questions } from './questions.js';
 
 document.addEventListener('DOMContentLoaded', function() { //This line adds an event listener to the document object, listening for the 'DOMContentLoaded' event, which fires when the initial HTML document has been completely loaded and parsed without waiting for stylesheets, images, and subframes to finish loading.
     const startButton = document.getElementById('start'); //  This line selects an element in the document with the ID 'start' and assigns it to the variable 
@@ -17,6 +16,8 @@ const endScreen = document.getElementById('end-screen');
 const initialsInput = document.getElementById('initials');
 const submitButton = document.getElementById('submit');
 const highscoresList = document.getElementById('highscores');
+const startScreen = document.getElementById('start-screen');
+const quizQuestions = document.getElementById('questions');
 
 let currentQuestionIndex = 0;
 let timer;
@@ -25,8 +26,8 @@ let timeLeft = 60; // Initial time in seconds
 
 function startQuiz() {
     console.log('Start button clicked - startQuiz function triggered'); 
-    hideElement(startButton);
-    showElement(choicesContainer);
+    hideElement(startScreen);
+    showElement(quizQuestions);
     startTimer();
     displayQuestion(currentQuestionIndex);
     console.log('Quiz started');
@@ -41,7 +42,7 @@ function displayQuestion(index) {
         choiceButton.addEventListener('click', () => handleAnswerClick(choice, currentQuestion.answer)); // Adds a click event listener to the choiceButton that triggers the handleAnswerClick function with the selected choice and the correct answer from the current question when clicked
         choicesContainer.appendChild(choiceButton); // Appends the choiceButton (representing a choice) to the choicesContainer element, displaying it on the webpage.
     });
-    console.log(`Question ${index + 1} displayed`);
+    //console.log(`Question ${index + 1} displayed`);
 }
 function handleAnswerClick(selectedChoice, correctAnswer) { //Begins the handleAnswerClick function, which processes the user's selected choice and correct answer.
     if (selectedChoice === correctAnswer) { // Checks if the selected choice matches the correct answer.
@@ -58,12 +59,12 @@ function handleAnswerClick(selectedChoice, correctAnswer) { //Begins the handleA
     } else {
         endQuiz(); //Ends the quiz if there are no more questions.
     }
-    console.log(`Selected choice: ${selectedChoice}, Correct answer: ${correctAnswer}`);
+    //console.log(`Selected choice: ${selectedChoice}, Correct answer: ${correctAnswer}`);
 }
 function endQuiz() { // Ends the quiz and displays the final score.
     clearInterval(timer);  // Stops the timer.
     timerDisplay.textContent = timeLeft; // Updates the timer display with the remaining time. 
-    hideElement(choicesContainer); //Hides the question choices.
+    hideElement(quizQuestions); //Hides the question choices.
     showElement(endScreen); //Shows the end screen
     document.getElementById('final-score').textContent = score; //Sets the final score on the screen
     console.log('Quiz ended'); 
@@ -71,12 +72,13 @@ function endQuiz() { // Ends the quiz and displays the final score.
 function startTimer() { // Starts timer
     timer = setInterval(() => {
         timeLeft--;
-        timerDisplay.textContent = timeLeft;
         if (timeLeft <= 0) {
             endQuiz();
-        }
+        } else {
+            timerDisplay.textContent = timeLeft;
+         }
     }, 1000);// Updates the timer display every second. If the time reaches 0, the quiz ends.
-    console.log('Timer started');
+    //console.log('Timer started');
 }
 
 function saveHighscores() { //Fetches the initials, stores the high scores in local storage, and redirects to the highscores page.
@@ -91,9 +93,9 @@ function saveHighscores() { //Fetches the initials, stores the high scores in lo
 submitButton.addEventListener('click', saveHighscores); //Listens for a click on the submit button to save high scores.
 
 function hideElement(element) { //Utility function to hide an HTML element.
-    element.style.display = 'none';
+    element.classList.add('hide');
 }
 
 function showElement(element) { //Utility function to display an HTML element.
-    element.style.display = 'block';
+    element.classList.remove('hide');
 }
