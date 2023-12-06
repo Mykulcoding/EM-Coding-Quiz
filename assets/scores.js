@@ -11,7 +11,7 @@ function loadHighscores() {
   }
 
   // Log the 'highscores' list element to the console
-  console.log("Highscores List Element:", highscoresList);
+ // console.log("Highscores List Element:", highscoresList);
 
   // Retrieve highscores from localStorage or initialize an empty array
   const highscores = JSON.parse(localStorage.getItem('highscores')) || [];
@@ -36,7 +36,7 @@ function loadHighscores() {
 // Event listener for the 'DOMContentLoaded' event
 document.addEventListener('DOMContentLoaded', () => {
   // Log that the 'DOMContentLoaded' event has been fired
-  console.log("DOMContentLoaded event fired");
+  //console.log("DOMContentLoaded event fired");
 
   // Call the 'loadHighscores' function when the DOM has finished loading
   loadHighscores();
