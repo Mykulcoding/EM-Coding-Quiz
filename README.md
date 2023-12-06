@@ -59,7 +59,8 @@ Ensure compatibility with modern browsers for optimal performance.
 
 
 ## Visual
-assets\Screenshot.PNG
+
+![Screenshot](https://github.com/Mykulcoding/EM-Coding-Quiz/assets/147704782/bd5134dc-5705-4192-9d21-39aaef271af3)
 
 
 ## Collaboration
